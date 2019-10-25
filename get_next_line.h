@@ -4,6 +4,9 @@
 # include "libft/libft.h"
 # include <fcntl.h>
 
-int get_next_line(const int fd, char **line);
+# define	EOF			(-1)
+# define	BUFF_SIZE	1000000000
+
+int 		get_next_line(const int fd, char **line);
 
 #endif

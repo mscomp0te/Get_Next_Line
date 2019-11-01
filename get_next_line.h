@@ -7,6 +7,13 @@
 # define	EOF			(-1)
 # define	BUFF_SIZE	1000000000
 
-int 		get_next_line(const int fd, char **line);
+typedef struct			s_lst_gnl
+{
+	int					fd;
+	char				*text;
+	struct s_lst_gnl	*next;
+}						t_lst_gnl;
+
+int 					get_next_line(const int fd, char **line);
 
 #endif

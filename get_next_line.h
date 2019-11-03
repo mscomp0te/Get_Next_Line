@@ -1,11 +1,10 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include "libft/libft.h"
+# include "libft.h"
 # include <fcntl.h>
 
-# define	EOF			(-1)
-# define	BUFF_SIZE	1000000000
+# define	BUFF_SIZE	10000000
 
 typedef struct			s_lst_gnl
 {

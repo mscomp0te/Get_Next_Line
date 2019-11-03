@@ -17,10 +17,11 @@
 # include <string.h>
 # include <stdlib.h>
 
-# define MAX_INT 2147483647
-# define MIN_INT 2147483648
-# define MAX_LONG 9223372036854775807
-# define MIN_LONG 9223372036854775808
+# define MAX_INT	2147483647
+# define MIN_INT	2147483648
+# define MAX_LONG	9223372036854775807
+# define MIN_LONG	9223372036854775808
+# define EOF		-1
 
 typedef struct		s_list
 {

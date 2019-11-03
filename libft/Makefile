@@ -1,13 +1,11 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I. -c
+CFLAGS = -Wall -Wextra -Werror -I ./includes -c
 
 SRC = ft_atoi.c \
 	ft_bzero.c \
-	ft_del_elem.c \
 	ft_del_list.c \
 	ft_del_twodem_arr.c \
 	ft_digits_num.c \
-	ft_getchar.c \
 	ft_isalnum.c \
 	ft_isalpha.c \
 	ft_isascii.c \
@@ -18,7 +16,6 @@ SRC = ft_atoi.c \
 	ft_isupper.c \
 	ft_itoa.c \
 	ft_lstadd.c \
-	ft_lstcount.c \
 	ft_lstdel.c \
 	ft_lstdelone.c \
 	ft_lstiter.c \
@@ -83,7 +80,7 @@ NAME = libft.a
 
 all: $(NAME)
 	
-$(NAME): $(OBJ) libft.h
+$(NAME): $(OBJ) includes/libft.h
 	ar rc $(NAME) $(OBJ)
 
 %.o: %.c

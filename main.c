@@ -7,7 +7,12 @@ int	main(void)
 	int		fd;
 
 	fd = open("sample.txt", O_RDONLY);
-	get_next_line(fd, &line);
-	printf("%s", line);
+
+	while (get_next_line(fd, &line))
+	{
+		printf("%s\n", line);
+	}
+	// get_next_line(fd, &line);
+	// printf("%s\n", line);
 	return (0);
 }

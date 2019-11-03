@@ -4,12 +4,12 @@
 # include "libft.h"
 # include <fcntl.h>
 
-# define	BUFF_SIZE	10000000
+# define	BUFF_SIZE	100000
 
 typedef struct			s_lst_gnl
 {
 	int					fd;
-	char				*text;
+	char				*rest;
 	struct s_lst_gnl	*next;
 }						t_lst_gnl;
 

@@ -16,8 +16,10 @@ static char				*check_rest(char **line, char *rest)
 {
 	char				*ptr;
 
+	ptr = NULL;
 	if (rest)
-		if (ptr = ft_strchr(rest, '\n'))
+	{	
+		if ((ptr = ft_strchr(rest, '\n')))
 		{
 			*ptr = '\0';
 			*line = ft_strdup(rest);
@@ -28,33 +30,34 @@ static char				*check_rest(char **line, char *rest)
 			*line = ft_strdup(rest);
 			ft_strclr(rest);
 		}
+	}
 	else
 		*line = ft_strnew(1);
 	return (ptr);
 }
 
-static int				get_line(const int fd, char **line, char *rest)
+static int				get_line(const int fd, char **line, char **rest)
 {
 	char				buf[BUFF_SIZE + 1];
 	int					bytes;
 	char				*ptr;
 	char				*tmp;
 
-	ptr = check_rest(line, rest);
+	ptr = check_rest(line, *rest);
 	while (!ptr && (bytes = read(fd, buf, BUFF_SIZE)))
-	{		
+	{
 		buf[bytes] = '\0';
 		if ((ptr = ft_strchr(buf, '\n')))
 		{
-			*ptr = '\0';
-			ptr++;
-			rest = ft_strdup(ptr);
+			*rest = ft_strdup(++ptr);
+			ft_strclr(--ptr);
 		}
 		tmp = *line;
-		*line = ft_strjoin(*line, buf);
+		if (!(*line = ft_strjoin(*line, buf)) || bytes < 0)
+			return (-1);
 		free(tmp);
 	}
-	return (bytes || ft_strlen(*line) || ft_strlen(rest)) ? 1 : 0;
+	return ((bytes || ft_strlen(*line)) ? 1 : 0);
 }
 
 int						get_next_line(const int fd, char **line)
@@ -73,5 +76,5 @@ int						get_next_line(const int fd, char **line)
 			tmp->next = newlist(fd);
 		tmp = tmp->next;
  	}
-	return (get_line(fd, line, lst->rest));
+	return (get_line(fd, line, &lst->rest));
 }

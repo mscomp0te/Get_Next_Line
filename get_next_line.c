@@ -1,18 +1,6 @@
 #include "get_next_line.h"
 
-static t_lst_gnl		*newlist(const int fd)
-{
-	t_lst_gnl			*new;
-
-	if (!(new = (t_lst_gnl *)malloc(sizeof(*new))))
-		return (NULL);
-	new->fd = fd;
-	new->rest = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-static char				*check_rest(char **line, char *rest)
+char				*check_rest(char **line, char *rest)
 {
 	char				*ptr;
 
@@ -36,7 +24,7 @@ static char				*check_rest(char **line, char *rest)
 	return (ptr);
 }
 
-static int				get_line(const int fd, char **line, char **rest)
+int				get_line(const int fd, char **line, char **rest)
 {
 	char				buf[BUFF_SIZE + 1];
 	int					bytes;
@@ -49,8 +37,9 @@ static int				get_line(const int fd, char **line, char **rest)
 		buf[bytes] = '\0';
 		if ((ptr = ft_strchr(buf, '\n')))
 		{
+			*ptr = '\0';
 			*rest = ft_strdup(++ptr);
-			ft_strclr(--ptr);
+			//ft_strclr(--ptr);
 		}
 		tmp = *line;
 		if (!(*line = ft_strjoin(*line, buf)) || bytes < 0)
@@ -58,6 +47,18 @@ static int				get_line(const int fd, char **line, char **rest)
 		free(tmp);
 	}
 	return ((bytes || ft_strlen(*line)) ? 1 : 0);
+}
+
+t_lst_gnl		*newlist(const int fd)
+{
+	t_lst_gnl			*new;
+
+	if (!(new = (t_lst_gnl *)malloc(sizeof(*new))))
+		return (NULL);
+	new->fd = fd;
+	new->rest = NULL;
+	new->next = NULL;
+	return (new);
 }
 
 int						get_next_line(const int fd, char **line)
@@ -72,9 +73,9 @@ int						get_next_line(const int fd, char **line)
 	tmp = lst;
 	while (tmp->fd != fd)
 	{
-		if (!tmp->next)
+		if (!(tmp->next))
 			tmp->next = newlist(fd);
 		tmp = tmp->next;
  	}
-	return (get_line(fd, line, &lst->rest));
+	return (get_line(tmp->fd, line, &tmp->rest));
 }

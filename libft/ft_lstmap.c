@@ -57,7 +57,7 @@ t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 		if (!(new_list->next = ft_lstnew(f(lst)->content,
 			f(lst)->content_size)))
 		{
-			ft_del_list(new_list);
+			ft_del_list(begin);
 			return (NULL);
 		}
 		lst = lst->next;

@@ -16,6 +16,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len;
 	char	*res;
+	int		i;
 
 	if (!s1 || !s2)
 		return (NULL);
@@ -23,6 +24,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (len + 1 < len
 		|| !(res = (char *)malloc(sizeof(*res) * (len + 1))))
 		return (NULL);
+	i = 0;
 	res = ft_strcpy(res, s1);
 	res = ft_strcat(res, s2);
 	return (res);

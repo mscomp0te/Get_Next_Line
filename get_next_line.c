@@ -1,12 +1,24 @@
 #include "get_next_line.h"
 
-char				*check_rest(char **line, char *rest)
+t_lst_gnl				*newlist(const int fd)
+{
+	t_lst_gnl			*new;
+
+	if (!(new = (t_lst_gnl *)malloc(sizeof(*new))))
+		return (NULL);
+	new->fd = fd;
+	new->rest = ft_strnew(BUFF_SIZE);
+	new->next = NULL;
+	return (new);
+}
+
+char					*check_rest(char **line, char *rest)
 {
 	char				*ptr;
 
 	ptr = NULL;
 	if (rest)
-	{	
+	{
 		if ((ptr = ft_strchr(rest, '\n')))
 		{
 			*ptr = '\0';
@@ -24,7 +36,7 @@ char				*check_rest(char **line, char *rest)
 	return (ptr);
 }
 
-int				get_line(const int fd, char **line, char **rest)
+int						get_line(const int fd, char **line, char **rest)
 {
 	char				buf[BUFF_SIZE + 1];
 	int					bytes;
@@ -38,8 +50,9 @@ int				get_line(const int fd, char **line, char **rest)
 		if ((ptr = ft_strchr(buf, '\n')))
 		{
 			*ptr = '\0';
-			*rest = ft_strdup(++ptr);
-			//ft_strclr(--ptr);
+			//*rest = ft_strdup(++ptr);
+			*rest = ft_strcpy(*rest, ++ptr);
+			ft_strclr(--ptr);
 		}
 		tmp = *line;
 		if (!(*line = ft_strjoin(*line, buf)) || bytes < 0)
@@ -47,18 +60,6 @@ int				get_line(const int fd, char **line, char **rest)
 		free(tmp);
 	}
 	return ((bytes || ft_strlen(*line)) ? 1 : 0);
-}
-
-t_lst_gnl		*newlist(const int fd)
-{
-	t_lst_gnl			*new;
-
-	if (!(new = (t_lst_gnl *)malloc(sizeof(*new))))
-		return (NULL);
-	new->fd = fd;
-	new->rest = NULL;
-	new->next = NULL;
-	return (new);
 }
 
 int						get_next_line(const int fd, char **line)
@@ -77,5 +78,6 @@ int						get_next_line(const int fd, char **line)
 			tmp->next = newlist(fd);
 		tmp = tmp->next;
  	}
+ 	//tmp->rest = ft_strnew(1);
 	return (get_line(tmp->fd, line, &tmp->rest));
 }

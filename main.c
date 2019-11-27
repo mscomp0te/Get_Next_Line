@@ -6,6 +6,7 @@ int	main(int argc, char **argv)
 	char	*line;
 	int fd;
 
+	line = NULL;
 	//int fd1 = open("hello.txt", O_RDONLY);
 	//int fd2 = open("city.txt", O_RDONLY);
 	if (argc == 2)

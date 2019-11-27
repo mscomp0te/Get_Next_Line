@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: syesseni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/27 21:03:31 by syesseni          #+#    #+#             */
+/*   Updated: 2019/11/27 21:04:42 by syesseni         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 t_lst_gnl				*newlist(const int fd)
@@ -77,7 +89,7 @@ int						get_next_line(const int fd, char **line)
 		if (!(tmp->next))
 			tmp->next = newlist(fd);
 		tmp = tmp->next;
- 	}
- 	//tmp->rest = ft_strnew(1);
+	}
+	//tmp->rest = ft_strnew(1);
 	return (get_line(tmp->fd, line, &tmp->rest));
 }

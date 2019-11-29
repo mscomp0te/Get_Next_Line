@@ -79,7 +79,7 @@ int						get_next_line(const int fd, char **line)
 	static t_lst_gnl	*lst;
 	t_lst_gnl			*tmp;
 
-	if (fd < 0 || !line || BUFF_SIZE < 1)
+	if (fd < 0 || !line)
 		return (-1);
 	if (!lst)
 		lst = newlist(fd);

@@ -4,17 +4,18 @@
 int	main(int argc, char **argv)
 {
 	char	*line;
+	int k;
 	int fd;
 
 	line = NULL;
-	//int fd1 = open("hello.txt", O_RDONLY);
-	//int fd2 = open("city.txt", O_RDONLY);
+	k = 1;
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
-		while (get_next_line(fd, &line))
+		while (k)
 		{
-			printf("%s\n", line);
+			k = get_next_line(fd, &line);
+			printf("%s   (return value: %d)\n", line, k);
 			free(line);
 		}
 	}
@@ -89,6 +90,6 @@ int	main(int argc, char **argv)
 
 	//close(fd1);
 	//close(fd2);
-	free(line);
+	//free(line);
 	return (0);
 }

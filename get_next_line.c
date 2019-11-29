@@ -24,28 +24,22 @@ t_lst_gnl				*newlist(const int fd)
 	return (new);
 }
 
-char					*check_rest(char **line, char *rest)
+char					*check_rest(char **ptr, char **rest)
 {
-	char				*ptr;
+	char				*res;
 
-	ptr = NULL;
-	if (rest)
+	if ((*ptr = ft_strchr(*rest, '\n')))
 	{
-		if ((ptr = ft_strchr(rest, '\n')))
-		{
-			*ptr = '\0';
-			*line = ft_strdup(rest);
-			rest = ft_strcpy(rest, ++ptr);
-		}
-		else
-		{
-			*line = ft_strdup(rest);
-			ft_strclr(rest);
-		}
+		res = ft_strsub(*rest, 0, *ptr - *rest);
+		*rest = ft_strcpy(*rest, ++(*ptr));
 	}
 	else
-		*line = ft_strnew(1);
-	return (ptr);
+	{
+		res = ft_strnew(ft_strlen(*rest));
+		res = ft_strcat(res, *rest);
+		ft_strclr(*rest);
+	}
+	return (res);
 }
 
 int						get_line(const int fd, char **line, char **rest)
@@ -55,13 +49,15 @@ int						get_line(const int fd, char **line, char **rest)
 	char				*ptr;
 	char				*tmp;
 
-	ptr = check_rest(line, *rest);
+	//ptr = check_rest(line, *rest);
+	ptr = NULL;
+	bytes = 0;
+	*line = check_rest(&ptr, rest);
 	while (!ptr && (bytes = read(fd, buf, BUFF_SIZE)))
 	{
 		buf[bytes] = '\0';
 		if ((ptr = ft_strchr(buf, '\n')))
 		{
-			*ptr = '\0';
 			//*rest = ft_strdup(++ptr);
 			*rest = ft_strcpy(*rest, ++ptr);
 			ft_strclr(--ptr);
@@ -71,7 +67,7 @@ int						get_line(const int fd, char **line, char **rest)
 			return (-1);
 		free(tmp);
 	}
-	return ((bytes || ft_strlen(*line)) ? 1 : 0);
+	return ((bytes || ft_strlen(*line) || ft_strlen(*rest)) ? 1 : 0);
 }
 
 int						get_next_line(const int fd, char **line)
